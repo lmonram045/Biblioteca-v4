@@ -1,6 +1,10 @@
 package org.iesalandalus.programacion.biblioteca.mvc.modelo.dominio;
 
 public class LibroEscrito extends Libro {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// Constantes de la clase
 	private static final int PAGINAS_PARA_RECOMPENSA = 25;
 	private static final float PUNTOS_PREMIO = 0.5f;

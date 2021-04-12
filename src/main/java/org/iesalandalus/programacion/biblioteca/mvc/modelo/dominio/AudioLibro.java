@@ -1,6 +1,10 @@
 package org.iesalandalus.programacion.biblioteca.mvc.modelo.dominio;
 
 public class AudioLibro extends Libro {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// Constantes de la clase
 	private static final int MINUTOS_PARA_RECOMPENSA = 15;
 	private static final float PUNTOS_PREMIO = 0.25f;

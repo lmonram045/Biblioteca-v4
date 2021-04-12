@@ -2,8 +2,14 @@ package org.iesalandalus.programacion.biblioteca.mvc.modelo.dominio;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.io.Serializable;
 
-public class Alumno {
+public class Alumno implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	// Constantes para almacenar las expresiones regulares de nombre y correo
 	private static final String ER_NOMBRE = "[a-zA-ZÁÉÍÓÚáéíóúÑñ]+[\\s]+[a-zA-ZÁÉÍÓÚáéíóúÑñ\\s]*";
 
