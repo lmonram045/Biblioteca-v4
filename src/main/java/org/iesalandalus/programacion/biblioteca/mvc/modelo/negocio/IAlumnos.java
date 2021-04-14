@@ -21,5 +21,9 @@ public interface IAlumnos {
 
 	/** Método para borrar un alumno */
 	void borrar(Alumno alumno) throws OperationNotSupportedException;
+	
+	void comenzar();
+
+	void terminar();
 
 }
