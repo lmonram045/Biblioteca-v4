@@ -22,5 +22,9 @@ public interface ILibros {
 
 	/** Método para borrar un libro. */
 	void borrar(Libro libro) throws OperationNotSupportedException;
+	
+	void comenzar();
+	
+	void terminar();
 
 }

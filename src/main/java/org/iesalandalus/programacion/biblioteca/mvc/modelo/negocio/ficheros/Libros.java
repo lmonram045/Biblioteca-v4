@@ -12,12 +12,32 @@ import org.iesalandalus.programacion.biblioteca.mvc.modelo.dominio.LibroEscrito;
 import org.iesalandalus.programacion.biblioteca.mvc.modelo.negocio.ILibros;
 
 public class Libros implements ILibros {
+	
+	
 
 	private List<Libro> coleccionLibros;
 
 	/** Constructor por defecto de la clase Libros */
 	public Libros() {
 		coleccionLibros = new ArrayList<>();
+	}
+	
+	@Override
+	public void comenzar() {
+		leer();
+	}
+	
+	private void leer() {
+		
+	}
+	
+	@Override
+	public void terminar() {
+		escribir();
+	}
+	
+	private void escribir() {
+		
 	}
 
 	/** Método para devolver una copia profunda de Libros */
