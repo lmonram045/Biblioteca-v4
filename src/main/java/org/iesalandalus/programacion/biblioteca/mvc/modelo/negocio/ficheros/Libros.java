@@ -44,7 +44,7 @@ public class Libros implements ILibros {
 			Libro libro = (Libro) entrada.readObject();
 
 			while (libro != null) {
-				// Primero inserto alumno en el array coleccionLibros y despues leo la
+				// Primero inserto libro en el array coleccionLibros y despues leo la
 				// siguiente entrada de el fichero.
 				insertar(libro);
 				libro = (Libro) entrada.readObject();
@@ -71,7 +71,7 @@ public class Libros implements ILibros {
 
 		// Creo el búfer de escritura para el archivo
 		try (ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream(ficheroLibros))) {
-			// Para cada entrada de coleccionAlumnos, lo guardo en el fichero alumnos.
+			// Para cada entrada de coleccionLibros, lo guardo en el fichero libros.
 			for (Libro libro : coleccionLibros)
 				salida.writeObject(libro);
 

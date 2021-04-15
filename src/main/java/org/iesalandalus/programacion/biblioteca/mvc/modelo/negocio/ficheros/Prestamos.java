@@ -1,5 +1,12 @@
 package org.iesalandalus.programacion.biblioteca.mvc.modelo.negocio.ficheros;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,11 +24,67 @@ import org.iesalandalus.programacion.biblioteca.mvc.modelo.negocio.IPrestamos;
 
 public class Prestamos implements IPrestamos {
 
+	private static final String NOMBRE_FICHERO_PRESTAMOS = "datos/prestamos.dat";
+
 	private List<Prestamo> coleccionPrestamos;
 
 	/** Constructor por defecto de clase Prestamos */
 	public Prestamos() {
 		coleccionPrestamos = new ArrayList<>();
+	}
+
+	@Override
+	public void comenzar() {
+		leer();
+	}
+
+	private void leer() {
+		// Referencio al archivo de prestamos
+		File ficheroPrestamos = new File(NOMBRE_FICHERO_PRESTAMOS);
+
+		// Creo el búfer de lectura para el archivo
+		try (ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(ficheroPrestamos))) {
+			// Asigno a la variable de tipo Alumno la primera entrada de el fichero
+			Prestamo prestamo = (Prestamo) entrada.readObject();
+
+			while (prestamo != null) {
+				// Primero inserto prestamo en el array coleccionPrestamos y despues leo la
+				// siguiente entrada de el fichero.
+				prestar(prestamo);
+				prestamo = (Prestamo) entrada.readObject();
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("No se puede abrir el fichero" + NOMBRE_FICHERO_PRESTAMOS);
+		} catch (IOException e) {
+			System.out.println("Error de E/S.");
+		} catch (ClassNotFoundException e) {
+			System.out.println("No se encuentra la clase.");
+		} catch (OperationNotSupportedException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	@Override
+	public void terminar() {
+		escribir();
+	}
+
+	private void escribir() {
+		// Referencio al archivo prestamos
+		File ficheroPrestamos = new File(NOMBRE_FICHERO_PRESTAMOS);
+
+		// Creo el búfer de escritura para el archivo
+		try (ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream(ficheroPrestamos))) {
+			// Para cada entrada de coleccionPrestamos, lo guardo en el fichero prestamos.
+			for (Prestamo prestamo : coleccionPrestamos)
+				salida.writeObject(prestamo);
+
+			System.out.println("Se escribió el fichero prestamos correctamente.");
+		} catch (FileNotFoundException e) {
+			System.out.println("No se encontró el fichero");
+		} catch (IOException e) {
+			System.out.println("Error de E/S");
+		}
 	}
 
 	/** Método para obtener una copia profunda de los préstamos */

@@ -63,5 +63,9 @@ public interface IPrestamos {
 	 * @throws OperationNotSupportedException
 	 */
 	void borrar(Prestamo prestamo) throws OperationNotSupportedException;
+	
+	void comenzar();
+	
+	void terminar();
 
 }
