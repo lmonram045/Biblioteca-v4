@@ -1,5 +1,12 @@
 package org.iesalandalus.programacion.biblioteca.mvc.modelo.negocio.ficheros;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -12,8 +19,8 @@ import org.iesalandalus.programacion.biblioteca.mvc.modelo.dominio.LibroEscrito;
 import org.iesalandalus.programacion.biblioteca.mvc.modelo.negocio.ILibros;
 
 public class Libros implements ILibros {
-	
-	
+
+	private static final String NOMBRE_FICHERO_LIBROS = "datos/libros.dat";
 
 	private List<Libro> coleccionLibros;
 
@@ -21,23 +28,59 @@ public class Libros implements ILibros {
 	public Libros() {
 		coleccionLibros = new ArrayList<>();
 	}
-	
+
 	@Override
 	public void comenzar() {
 		leer();
 	}
-	
+
 	private void leer() {
-		
+		// Referencio al archivo de libros
+		File ficheroLibros = new File(NOMBRE_FICHERO_LIBROS);
+
+		// Creo el búfer de lectura para el archivo
+		try (ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(ficheroLibros))) {
+			// Asigno a la variable de tipo Alumno la primera entrada de el fichero
+			Libro libro = (Libro) entrada.readObject();
+
+			while (libro != null) {
+				// Primero inserto alumno en el array coleccionLibros y despues leo la
+				// siguiente entrada de el fichero.
+				insertar(libro);
+				libro = (Libro) entrada.readObject();
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("No se puede abrir el fichero" + NOMBRE_FICHERO_LIBROS);
+		} catch (IOException e) {
+			System.out.println("Error de E/S.");
+		} catch (ClassNotFoundException e) {
+			System.out.println("No se encuentra la clase.");
+		} catch (OperationNotSupportedException e) {
+			System.out.println(e.getMessage());
+		}
 	}
-	
+
 	@Override
 	public void terminar() {
 		escribir();
 	}
-	
+
 	private void escribir() {
-		
+		// Referencio al archivo libros
+		File ficheroLibros = new File(NOMBRE_FICHERO_LIBROS);
+
+		// Creo el búfer de escritura para el archivo
+		try (ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream(ficheroLibros))) {
+			// Para cada entrada de coleccionAlumnos, lo guardo en el fichero alumnos.
+			for (Libro libro : coleccionLibros)
+				salida.writeObject(libro);
+
+			System.out.println("Se escribió el fichero libros correctamente.");
+		} catch (FileNotFoundException e) {
+			System.out.println("No se encontró el fichero");
+		} catch (IOException e) {
+			System.out.println("Error de E/S");
+		}
 	}
 
 	/** Método para devolver una copia profunda de Libros */
