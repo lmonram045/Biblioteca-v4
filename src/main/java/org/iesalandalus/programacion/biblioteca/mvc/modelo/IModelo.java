@@ -63,5 +63,9 @@ public interface IModelo {
 
 	/** Método para obtener una copia profunda de los préstamos realizados en un mes ordenados por curso */
 	Map<Curso, Integer> getEstadisticaMensualPorCurso(LocalDate mes);
+	
+	void comenzar();
+	
+	void terminar();
 
 }

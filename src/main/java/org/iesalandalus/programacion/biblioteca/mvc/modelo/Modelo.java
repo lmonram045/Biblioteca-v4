@@ -26,6 +26,20 @@ public class Modelo implements IModelo {
 		prestamos = fuenteDatos.crearPrestamos();
 		libros = fuenteDatos.crearLibros();
 	}
+	
+	@Override
+	public void comenzar() {
+		alumnos.comenzar();
+		libros.comenzar();
+		prestamos.comenzar();
+	}
+	
+	@Override
+	public void terminar() {
+		alumnos.terminar();
+		libros.terminar();
+		prestamos.terminar();
+	}
 
 	/** Método para insertar un alumno */
 	@Override
