@@ -37,6 +37,19 @@ public class Alumnos implements IAlumnos {
 		// Referencio al archivo de alumnos
 		File ficheroAlumnos = new File(NOMBRE_FICHERO_ALUMNOS);
 		
+		// Compruebo si existe el directorio
+		File directorioDatos = new File("datos");
+		if (!directorioDatos.exists())
+			directorioDatos.mkdir();
+		
+		/*if (!ficheroAlumnos.exists())
+			try {
+				ficheroAlumnos.createNewFile();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}*/
+		
 		// Creo el búfer de lectura para el archivo
 		try (ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(ficheroAlumnos))) {
 			// Asigno a la variable de tipo Alumno la primera entrada de el fichero
