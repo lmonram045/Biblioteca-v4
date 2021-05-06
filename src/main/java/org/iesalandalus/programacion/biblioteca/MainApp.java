@@ -21,7 +21,7 @@ public class MainApp extends Application{
 	public void start(Stage escenarioPrincipal) {
 		try {
 			//Parent raiz = FXMLLoader.load(getClass().getResource("/panelPrincipal.fxml"));
-			Parent raiz = FXMLLoader.load(LocalizadorRecursos.class.getResource("panelPrincipal.fxml"));
+			Parent raiz = FXMLLoader.load(LocalizadorRecursos.class.getResource("vista/principal.fxml"));
 			//FXMLLoader cargadorVentanaPrincipal = new FXMLLoader(LocalizadorRecursos.class.getResource("panelPrincipal.fxml"));
 			Scene escena = new Scene(raiz);
 			escenarioPrincipal.setTitle("Gestion biblioteca");
@@ -36,9 +36,20 @@ public class MainApp extends Application{
 		launch(args);
 		
 		IModelo modelo = new Modelo(FactoriaFuenteDatos.FICHEROS.crear());
-		IVista vista = FactoriaVista.TEXTO.crear();
+		IVista vista = procesarArgumentosVista(args);
 		IControlador controlador = new Controlador(modelo, vista);
 		controlador.comenzar(); 
+	}
+	
+	/** Clase para elegir la vista mediante argumentos */
+	private static IVista procesarArgumentosVista(String[] args) {
+		// Si se pasa de argumento "-vtexto" se pone en modo texto, si no, en modo gráfico.
+		for (String argumento : args) {
+			if (argumento.equalsIgnoreCase("-vtexto"))
+				return FactoriaVista.TEXTO.crear();
+		}
+		
+		return FactoriaVista.GRAFICA.crear();
 	}
 
 }
